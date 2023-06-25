@@ -1,0 +1,28 @@
+services:
+
+  pgsql:
+    image: "postgres:bullseye"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: crud_admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: crud_project
+    networks:
+      - pyauction
+    
+  pyauction:
+    build: .
+    ports:
+      - "8000:80"
+    networks:
+      - pyauction
+    
+    environment:
+      DB_URL: pgsql
+
+networks:
+  pyauction:
+    driver: bridge
+
+  
